@@ -12,10 +12,10 @@ import commands.store.Inventory;
 import commands.user.CreateWithArray;
 import commands.user.CreateWithList;
 
-public class ShowMainCommand extends Command {
+public class OrderCommand extends Command {
 
-    public ShowMainCommand() {
-        super(CommandEnum.MAIN_COMMANDS);
+    public OrderCommand() {
+        super(CommandEnum.ORDER_TABLE_QUERIES);
     }
 
     @Override
@@ -25,6 +25,7 @@ public class ShowMainCommand extends Command {
 
     @Override
     public NextCommands nextCommands() {
-        return new NextCommands(new PetCommand(),new OrderCommand(),new UserCommand(), new ExitCommand());
+        return new NextCommands(new AddStoreOrder(), new FindOrderById(), new DeleteOrderById(), new Inventory(),
+                new ShowMainCommand(), new ExitCommand());
     }
 }

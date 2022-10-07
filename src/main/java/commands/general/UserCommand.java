@@ -9,13 +9,12 @@ import commands.store.AddStoreOrder;
 import commands.store.DeleteOrderById;
 import commands.store.FindOrderById;
 import commands.store.Inventory;
-import commands.user.CreateWithArray;
-import commands.user.CreateWithList;
+import commands.user.*;
 
-public class ShowMainCommand extends Command {
+public class UserCommand extends Command {
 
-    public ShowMainCommand() {
-        super(CommandEnum.MAIN_COMMANDS);
+    public UserCommand() {
+        super(CommandEnum.USER_TABLE_QUERIES);
     }
 
     @Override
@@ -25,6 +24,8 @@ public class ShowMainCommand extends Command {
 
     @Override
     public NextCommands nextCommands() {
-        return new NextCommands(new PetCommand(),new OrderCommand(),new UserCommand(), new ExitCommand());
+        return new NextCommands(new AddUser(), new UpdateUser(), new FindUserByName(), new DeleteUserByName(),
+                new CreateWithArray(), new CreateWithList(), new LoginUser(),
+                new ShowMainCommand(), new ExitCommand());
     }
 }

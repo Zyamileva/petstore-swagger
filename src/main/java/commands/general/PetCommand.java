@@ -12,10 +12,10 @@ import commands.store.Inventory;
 import commands.user.CreateWithArray;
 import commands.user.CreateWithList;
 
-public class ShowMainCommand extends Command {
+public class PetCommand extends Command {
 
-    public ShowMainCommand() {
-        super(CommandEnum.MAIN_COMMANDS);
+    public PetCommand() {
+        super(CommandEnum.PET_TABLE_QUERIES);
     }
 
     @Override
@@ -25,6 +25,7 @@ public class ShowMainCommand extends Command {
 
     @Override
     public NextCommands nextCommands() {
-        return new NextCommands(new PetCommand(),new OrderCommand(),new UserCommand(), new ExitCommand());
+        return new NextCommands(new AddPet(), new FindById(), new FindByStatus(), new UploadImage(), new UpdatePet(),
+                new DeleteById(), new ShowMainCommand(), new ExitCommand());
     }
 }

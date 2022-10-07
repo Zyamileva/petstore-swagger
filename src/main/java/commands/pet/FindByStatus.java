@@ -30,7 +30,7 @@ public class FindByStatus extends Command {
                     );
             return new CommandResponse(true, stringBuilder.toString());
         } else {
-            return new CommandResponse(false, Set.of("Not found this status: " + status));
+            return new CommandResponse(false, "Not found this status: " + status);
         }
     }
 

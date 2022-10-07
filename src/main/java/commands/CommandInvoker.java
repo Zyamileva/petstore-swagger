@@ -18,8 +18,6 @@ public class CommandInvoker {
                 System.out.println("Command executed: " + command);
                 System.out.println(response.getOutput());
                 nextCommands = command.nextCommands();
-            } else {
-                System.out.println(response.getErrors());
             }
         }
     }
