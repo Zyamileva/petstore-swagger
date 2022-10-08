@@ -2,7 +2,6 @@ package commands.pet;
 
 import commands.*;
 import commands.general.ShowMainCommand;
-import entity.order.Order;
 import entity.pet.Category;
 import entity.pet.Pet;
 import entity.pet.Status;

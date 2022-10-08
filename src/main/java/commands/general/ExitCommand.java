@@ -6,7 +6,6 @@ import commands.CommandResponse;
 import commands.NextCommands;
 
 public class ExitCommand extends Command {
-   // private static final Logger log = LogManager.getLogger(ExitCommand.class);
 
     public ExitCommand() {
         super(CommandEnum.EXIT);
@@ -14,7 +13,6 @@ public class ExitCommand extends Command {
 
     @Override
     public CommandResponse execute() {
-        //log.info("Shutdown twitter");
         System.exit(0);
         return null;
     }

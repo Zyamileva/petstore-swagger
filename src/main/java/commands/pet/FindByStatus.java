@@ -7,16 +7,17 @@ import service.PetService;
 
 import java.net.URI;
 import java.util.Arrays;
-import java.util.Set;
 
 import static utils.StringUtils.NEW_LINE;
 import static utils.StringUtils.SEPARATOR_SHORT;
 
 public class FindByStatus extends Command {
     private final PetService petService = new PetService();
+
     public FindByStatus() {
         super(CommandEnum.FIND_BY_STATUS);
     }
+
     @Override
     public CommandResponse execute() {
         String status = CommandLineReader.readLine("Please enter Status:" + Arrays.toString(Status.values()));

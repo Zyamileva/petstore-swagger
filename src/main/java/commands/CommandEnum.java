@@ -22,6 +22,7 @@ public enum CommandEnum {
     ADD_USER("Add User"),
     DELETE_USER("Delete User"),
     LOGIN_USER("Login User"),
+    LOGOUT_USER("Logout User"),
     MAIN_COMMANDS("Show main commands"),
 
     EXIT("Exit");

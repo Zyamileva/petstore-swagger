@@ -3,7 +3,6 @@ package service;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import entity.order.Order;
-import entity.pet.Pet;
 import entity.pet.Status;
 import exceptions.ResponseException;
 import org.apache.hc.client5.http.classic.methods.HttpDelete;

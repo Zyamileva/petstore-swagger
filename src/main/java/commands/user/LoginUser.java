@@ -2,11 +2,10 @@ package commands.user;
 
 import commands.*;
 import commands.general.ShowMainCommand;
-import entity.user.User;
+import entity.response.ApiResponse;
 import exceptions.ResponseException;
 import service.UserService;
 
-import java.io.IOException;
 import java.net.URI;
 
 public class LoginUser extends Command {
@@ -20,15 +19,13 @@ public class LoginUser extends Command {
     public CommandResponse execute() {
         String login = CommandLineReader.readLine("Please enter username");
         String password = CommandLineReader.readLine("Please enter password");
-        String loginUser = String.format("https://petstore.swagger.io/v2/user/login");
+        String loginUser = "https://petstore.swagger.io/v2/user/login";
         try {
-            userService.loginUser(URI.create(loginUser), loginUser, password);
-            return new CommandResponse(true);
+            ApiResponse apiResponse = userService.loginUser(URI.create(loginUser), loginUser, password);
+            return new CommandResponse(true, apiResponse.toString());
         } catch (ResponseException exception) {
             System.out.println(exception.getMessage());
             return new CommandResponse(false);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
         }
     }
 

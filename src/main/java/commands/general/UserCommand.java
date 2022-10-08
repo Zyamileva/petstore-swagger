@@ -4,11 +4,6 @@ import commands.Command;
 import commands.CommandEnum;
 import commands.CommandResponse;
 import commands.NextCommands;
-import commands.pet.*;
-import commands.store.AddStoreOrder;
-import commands.store.DeleteOrderById;
-import commands.store.FindOrderById;
-import commands.store.Inventory;
 import commands.user.*;
 
 public class UserCommand extends Command {
@@ -25,7 +20,7 @@ public class UserCommand extends Command {
     @Override
     public NextCommands nextCommands() {
         return new NextCommands(new AddUser(), new UpdateUser(), new FindUserByName(), new DeleteUserByName(),
-                new CreateWithArray(), new CreateWithList(), new LoginUser(),
-                new ShowMainCommand(), new ExitCommand());
+                new CreateWithArray(), new CreateWithList(), new LoginUser(), new Logout(), new ShowMainCommand(),
+                new ExitCommand());
     }
 }

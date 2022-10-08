@@ -2,8 +2,6 @@ package commands.user;
 
 import commands.*;
 import commands.general.ShowMainCommand;
-import entity.order.Order;
-import entity.response.ApiResponse;
 import entity.user.User;
 import exceptions.ResponseException;
 import service.UserService;

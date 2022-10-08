@@ -4,9 +4,7 @@ import com.google.gson.Gson;
 import entity.response.ApiResponse;
 import entity.user.User;
 import exceptions.ResponseException;
-import org.apache.commons.codec.binary.Base64;
 import org.apache.hc.client5.http.auth.AuthScope;
-import org.apache.hc.client5.http.auth.CredentialsProvider;
 import org.apache.hc.client5.http.auth.UsernamePasswordCredentials;
 import org.apache.hc.client5.http.classic.methods.HttpDelete;
 import org.apache.hc.client5.http.classic.methods.HttpGet;
@@ -17,14 +15,12 @@ import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpResponse;
 import org.apache.hc.client5.http.impl.classic.HttpClients;
 import org.apache.hc.core5.http.HttpEntity;
-import org.apache.hc.core5.http.HttpHeaders;
 import org.apache.hc.core5.http.io.HttpClientResponseHandler;
 import org.apache.hc.core5.http.io.entity.EntityUtils;
 import org.apache.hc.core5.http.io.entity.StringEntity;
 
 import java.io.IOException;
 import java.net.URI;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -91,7 +87,8 @@ public class UserService {
     }
 
     public ApiResponse updateUserByUserName(URI uri, User updateUser) {
-        try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
+        try (CloseableHttpClient httpClient = HttpClients.createDefault();
+        ) {
             HttpPut httpPut = new HttpPut(uri);
             httpPut.setHeader("Accept", "application/json");
             httpPut.setHeader("Content-type", "application/json");
@@ -116,19 +113,35 @@ public class UserService {
             throw new RuntimeException(e);
         }
     }
-    public void loginUser(URI uri, String login, String password) throws IOException {
-      //  CloseableHttpClient httpClient = HttpClients.createDefault();
-            HttpGet httpGet = new HttpGet(uri);
 
+    public ApiResponse loginUser(URI uri, String login, String password) {
+        HttpGet httpGet = new HttpGet(uri);
         BasicCredentialsProvider basicCredentialsProvider = new BasicCredentialsProvider();
-        char[] encodedPath = (password.toCharArray());
-basicCredentialsProvider.setCredentials(new AuthScope("petstore.swagger.io",80),new UsernamePasswordCredentials(login,
-        encodedPath));
+        char[] encodedPath = password.toCharArray();
+        basicCredentialsProvider.setCredentials(new AuthScope("petstore.swagger.io", 80), new UsernamePasswordCredentials(login,
+                encodedPath));
         CloseableHttpClient build = HttpClients.custom().setDefaultCredentialsProvider(basicCredentialsProvider).build();
-        CloseableHttpResponse execute = build.execute(httpGet);
 
+        HttpClientResponseHandler<String> responseHandler = getStringHttpClientResponseHandler();
+        try {
+            CloseableHttpResponse execute1 = build.execute(httpGet);
+            String execute = build.execute(httpGet, responseHandler);
+            return GSON.fromJson(execute, ApiResponse.class);
+        } catch (IOException ignored) {
+            return null;
+        }
     }
 
+    public ApiResponse logout(URI uri) {
+        try (CloseableHttpClient httpClient = HttpClients.createDefault();) {
+            HttpGet httpGet = new HttpGet(uri);
+            HttpClientResponseHandler<String> responseHandler = getStringHttpClientResponseHandler();
+            String str = httpClient.execute(httpGet, responseHandler);
+            return GSON.fromJson(str, ApiResponse.class);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     private static HttpClientResponseHandler<String> getStringHttpClientResponseHandler() {
         return response -> {

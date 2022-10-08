@@ -2,18 +2,12 @@ package commands.user;
 
 import commands.*;
 import commands.general.ShowMainCommand;
-import entity.order.Order;
-import entity.order.OrderStatus;
-import entity.pet.Tag;
 import entity.response.ApiResponse;
 import entity.user.User;
-import service.OrderService;
 import service.UserService;
 
 import java.net.URI;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class CreateWithArray extends Command {
     private final UserService userService = new UserService();

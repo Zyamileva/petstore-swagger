@@ -6,8 +6,7 @@ import entity.response.ApiResponse;
 import entity.user.User;
 import service.UserService;
 
-import java.net.URI;
-import java.util.ArrayList;
+import java.net.URI;;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -48,7 +47,7 @@ public class CreateWithList extends Command {
             }
         }
         String createWithList = "https://petstore.swagger.io/v2/user/createWithList";
-        ApiResponse apiResponse = userService.createWithList(URI.create(createWithList),users);
+        ApiResponse apiResponse = userService.createWithList(URI.create(createWithList), users);
         return new CommandResponse(true, apiResponse.toString());
     }
 

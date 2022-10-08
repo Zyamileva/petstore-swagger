@@ -2,7 +2,6 @@ package commands.store;
 
 import commands.*;
 import commands.general.ShowMainCommand;
-import entity.order.Order;
 import entity.pet.Status;
 import exceptions.ResponseException;
 import service.OrderService;
@@ -10,8 +9,7 @@ import service.OrderService;
 import java.net.URI;
 import java.util.Map;
 
-public class Inventory extends Command
-{
+public class Inventory extends Command {
     private final OrderService orderService = new OrderService();
 
     public Inventory() {

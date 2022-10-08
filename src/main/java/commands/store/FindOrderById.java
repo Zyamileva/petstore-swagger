@@ -3,15 +3,10 @@ package commands.store;
 import commands.*;
 import commands.general.ShowMainCommand;
 import entity.order.Order;
-import entity.order.OrderStatus;
-import entity.pet.Pet;
 import exceptions.ResponseException;
-import org.apache.hc.client5.http.ClientProtocolException;
 import service.OrderService;
 
 import java.net.URI;
-import java.time.LocalDateTime;
-import java.util.Arrays;
 
 public class FindOrderById extends Command {
     private final OrderService orderService = new OrderService();

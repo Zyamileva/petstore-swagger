@@ -2,7 +2,6 @@ package commands.pet;
 
 import commands.*;
 import commands.general.ShowMainCommand;
-import entity.pet.Pet;
 import entity.response.ApiResponse;
 import exceptions.ResponseException;
 import service.PetService;
