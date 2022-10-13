@@ -11,7 +11,7 @@ public abstract class Command {
         this.command = command;
     }
 
-    public abstract CommandResponse execute() throws IOException, InterruptedException, ParseException;
+    public abstract CommandResponse execute();
 
     public abstract NextCommands nextCommands();
 

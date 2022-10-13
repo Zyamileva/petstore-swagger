@@ -1,9 +1,6 @@
 package commands;
 
 import commands.general.ShowMainCommand;
-import org.apache.hc.core5.http.ParseException;
-
-import java.io.IOException;
 
 public class CommandInvoker {
 
@@ -13,17 +10,13 @@ public class CommandInvoker {
         while (true) {
             Command command = parseCommand(nextCommands);
             System.out.println(command);
-            CommandResponse response = null;
-            try {
-                response = command.execute();
-            } catch (IOException|InterruptedException|ParseException e) {
-                System.out.println("Error. Try yet.");
-               continue;
-            }
+            CommandResponse response = command.execute();
             if (response.isSuccessful()) {
                 System.out.println("Command executed: " + command);
                 System.out.println(response.getOutput());
                 nextCommands = command.nextCommands();
+            } else {
+                System.out.println(response.getOutput());
             }
         }
     }
