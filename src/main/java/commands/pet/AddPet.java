@@ -80,7 +80,6 @@ public class AddPet extends Command {
             }
         }
 
-
         Pet newPet = new Pet(idPet, category, namePet, photoUrls, tags, statusEnum);
         String addPet = "https://petstore.swagger.io/v2/pet";
         Pet pet = petService.addPet(URI.create(addPet), newPet);

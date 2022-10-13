@@ -3,6 +3,7 @@ package service;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import entity.pet.Pet;
+import entity.pet.Status;
 import entity.response.ApiResponse;
 import exceptions.ResponseException;
 import org.apache.commons.codec.binary.Base64;
@@ -10,6 +11,7 @@ import org.apache.hc.client5.http.classic.methods.HttpDelete;
 import org.apache.hc.client5.http.classic.methods.HttpGet;
 import org.apache.hc.client5.http.classic.methods.HttpPost;
 import org.apache.hc.client5.http.classic.methods.HttpPut;
+import org.apache.hc.client5.http.entity.UrlEncodedFormEntity;
 import org.apache.hc.client5.http.entity.mime.MultipartEntityBuilder;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpResponse;
@@ -21,25 +23,32 @@ import org.apache.hc.core5.http.ParseException;
 import org.apache.hc.core5.http.io.HttpClientResponseHandler;
 import org.apache.hc.core5.http.io.entity.EntityUtils;
 import org.apache.hc.core5.http.io.entity.StringEntity;
+import org.apache.hc.core5.net.URIBuilder;
 
 import java.io.*;
 import java.lang.reflect.Type;
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 public class PetService {
     private final Gson GSON = new Gson();
 
-    public List<Pet> findByStatus(URI uri) {
+    public List<Pet> findByStatus(URI uri, Status status) {
         try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
             HttpGet httpGet = new HttpGet(uri);
+            URI newUri = new URIBuilder(httpGet.getUri())
+                    .addParameter("status", status.getName())
+                    .build();
+            httpGet.setUri(newUri);
             CloseableHttpResponse response = httpClient.execute(httpGet);
             String str = EntityUtils.toString(response.getEntity(), "UTF-8");
             Type type = new TypeToken<List<Pet>>() {
             }.getType();
+            Object o = GSON.fromJson(str, type);
             return GSON.fromJson(str, type);
-        } catch (IOException | ParseException e) {
+        } catch (IOException | ParseException | URISyntaxException e) {
             throw new RuntimeException(e);
         }
     }
@@ -68,7 +77,7 @@ public class PetService {
             HttpEntity multipart = multipartEntityBuilder.build();
             httpPost.setEntity(multipart);
             HttpClientResponseHandler<String> responseHandler = getStringHttpClientResponseHandler();
-            String  str = httpClient.execute(httpPost,responseHandler);
+            String str = httpClient.execute(httpPost, responseHandler);
             return GSON.fromJson(str, ApiResponse.class);
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -118,6 +127,24 @@ public class PetService {
             String execute = httpClient.execute(httpPut, responseHandler);
             return GSON.fromJson(execute, Pet.class);
         } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public ApiResponse updatePetWithFormData(URI uri, String namePet, Status statusEnum) {
+        try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
+            HttpPost httpPost = new HttpPost(uri);
+            httpPost.setHeader("Accept", "application/json");
+            httpPost.setHeader("Content-type", "application/x-www-form-urlencoded");
+            URI newUri = new URIBuilder(httpPost.getUri())
+                    .addParameter("name", namePet)
+                    .addParameter("status", statusEnum.getName())
+                    .build();
+            httpPost.setUri(newUri);
+            HttpClientResponseHandler<String> responseHandler = getStringHttpClientResponseHandler();
+            String execute = httpClient.execute(httpPost, responseHandler);
+            return GSON.fromJson(execute, ApiResponse.class);
+        } catch (IOException | URISyntaxException e) {
             throw new RuntimeException(e);
         }
     }

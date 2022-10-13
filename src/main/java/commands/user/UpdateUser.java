@@ -5,8 +5,10 @@ import commands.general.ShowMainCommand;
 import entity.response.ApiResponse;
 import entity.user.User;
 import exceptions.ResponseException;
+import org.apache.hc.core5.http.ParseException;
 import service.UserService;
 
+import java.io.IOException;
 import java.net.URI;
 
 public class UpdateUser extends Command {

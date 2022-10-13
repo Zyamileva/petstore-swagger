@@ -11,6 +11,7 @@ public enum CommandEnum {
     DELETE_BY_ID("Delete pet by ID"),
     ADD_PET("Add pet"),
     UPDATE_PET("Update pet"),
+    UPDATE_PET_WITH_FORM_DATA("Update pet with form data"),
     ADD_STORE_ORDER("Add store order"),
     FIND_ORDER_BY_ID("Find order by ID"),
     DELETE_ORDER_BY_ID("Delete order by id"),

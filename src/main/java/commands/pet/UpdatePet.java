@@ -76,14 +76,14 @@ public class UpdatePet extends Command {
                     answer = false;
                     break;
                 } else {
-                    System.out.println("Entered incorrectly.1");
+                    System.out.println("Entered incorrectly.");
                 }
             }
         }
         Pet newPet = new Pet(idPet, category, namePet, photoUrls, tags, statusEnum);
-        String addPet = "https://petstore.swagger.io/v2/pet";
+        String updatePet = "https://petstore.swagger.io/v2/pet";
         try {
-            Pet pet = petService.updatePet(URI.create(addPet), newPet);
+            Pet pet = petService.updatePet(URI.create(updatePet), newPet);
             return new CommandResponse(true, pet.toString());
         } catch (ResponseException exception) {
             System.out.println(exception.getMessage());

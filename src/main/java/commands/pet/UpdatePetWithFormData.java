@@ -3,25 +3,25 @@ package commands.pet;
 import commands.*;
 import commands.general.ShowMainCommand;
 import entity.pet.Status;
+import entity.response.ApiResponse;
+import exceptions.ResponseException;
 import service.PetService;
 
 import java.net.URI;
 import java.util.Arrays;
 
-import static utils.StringUtils.NEW_LINE;
-import static utils.StringUtils.SEPARATOR_SHORT;
-
-public class FindByStatus extends Command {
+public class UpdatePetWithFormData extends Command {
     private final PetService petService = new PetService();
 
-    public FindByStatus() {
-        super(CommandEnum.FIND_BY_STATUS);
+    public UpdatePetWithFormData() {
+        super(CommandEnum.UPDATE_PET_WITH_FORM_DATA);
     }
 
     @Override
     public CommandResponse execute() {
-        String findByStatus = "https://petstore.swagger.io/v2/pet/findByStatus";
-        String status;
+        long idPet = CommandLineReader.readLong("Enter Pet`s id:");
+        String namePet = CommandLineReader.readLine("Enter Pet`s name:");
+        String status = "";
         Status statusEnum;
         while (true) {
             status = CommandLineReader.readLine("Enter status: " + Arrays.toString(Status.values()));
@@ -34,13 +34,14 @@ public class FindByStatus extends Command {
                 System.out.println("Not found this status: " + status + ". Enter yet.");
             }
         }
-        StringBuilder stringBuilder = new StringBuilder();
-        petService.findByStatus(URI.create(findByStatus), statusEnum)
-                .forEach(pet -> stringBuilder
-                        .append(pet).append(NEW_LINE)
-                        .append(SEPARATOR_SHORT).append(NEW_LINE)
-                );
-        return new CommandResponse(true, stringBuilder.toString());
+        String updatePet = String.format("https://petstore.swagger.io/v2/pet/%d", idPet);
+        try {
+            ApiResponse apiResponse = petService.updatePetWithFormData(URI.create(updatePet),namePet,statusEnum);
+            return new CommandResponse(true, apiResponse.toString());
+        } catch (ResponseException exception) {
+            System.out.println(exception.getMessage());
+            return new CommandResponse(false);
+        }
     }
 
     @Override

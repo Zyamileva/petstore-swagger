@@ -20,6 +20,6 @@ public class PetCommand extends Command {
     @Override
     public NextCommands nextCommands() {
         return new NextCommands(new AddPet(), new FindById(), new FindByStatus(), new UploadImage(), new UpdatePet(),
-                new DeleteById(), new ShowMainCommand(), new ExitCommand());
+                new UpdatePetWithFormData(), new DeleteById(), new ShowMainCommand(), new ExitCommand());
     }
 }

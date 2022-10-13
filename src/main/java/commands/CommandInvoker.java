@@ -7,13 +7,19 @@ import java.io.IOException;
 
 public class CommandInvoker {
 
-    public static void invoke() throws IOException, InterruptedException, ParseException {
+    public static void invoke() {
         ShowMainCommand showMainCommand = new ShowMainCommand();
         NextCommands nextCommands = showMainCommand.nextCommands();
         while (true) {
             Command command = parseCommand(nextCommands);
             System.out.println(command);
-            CommandResponse response = command.execute();
+            CommandResponse response = null;
+            try {
+                response = command.execute();
+            } catch (IOException|InterruptedException|ParseException e) {
+                System.out.println("Error. Try yet.");
+               continue;
+            }
             if (response.isSuccessful()) {
                 System.out.println("Command executed: " + command);
                 System.out.println(response.getOutput());
